@@ -14,7 +14,7 @@ def find_jobs():
     html_text = requests.get('https://www.timesjobs.com/candidate/job-search.html?searchType=personalizedSearch&from=submit&txtKeywords=python&txtLocation=').text
     soup = BeautifulSoup(html_text, 'lxml')
     jobs = soup.find_all('li', class_ = 'clearfix job-bx wht-shd-bx')
-    for job in jobs:
+    for index, job in enumerate(jobs):
         published_date = job.find('span', class_ = 'sim-posted').span.text
         if published_date[7].isnumeric() :
 
@@ -29,11 +29,12 @@ def find_jobs():
                     unfamiliar_skill_detected = True
                 
             if unfamiliar_skill_detected is False:
-                print(f"Company Name: {comp_name}")
-                print(f"Required Skills: {skills.strip()}")
-                print(f"Published Date: {date}")
-                print(f"More Info: {more_info}")
-                print('')    
+                with open(f'posts/{index}.txt', 'w') as f:
+                    f.write(f"Company Name: {comp_name} \n")
+                    f.write(f"Required Skills: {skills.strip()} \n")
+                    f.write(f"Published Date: {date} \n")
+                    f.write(f"More Info: {more_info} \n")
+                print(f'File saved: {index}.txt')
 
 
 if __name__ == '__main__':
