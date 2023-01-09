@@ -13,10 +13,9 @@ for job in jobs:
         date = today - timedelta(days= int(published_date[7]))
         comp_name = job.find('h3', class_ = 'joblist-comp-name').text.strip()
         skills = job.find('span', class_ = 'srp-skills').text.strip()
-        
-        print(f'''
-        Company Name: {comp_name}
-        Required Skills: {skills}
-        Published Date: {date}
-        ''')
+        more_info = job.header.h2.a['href']
+        print(f"Company Name: {comp_name}")
+        print(f"Required Skills: {skills}")
+        print(f"Published Date: {date}")
+        print(f"More Info: {more_info}")
         print('')
